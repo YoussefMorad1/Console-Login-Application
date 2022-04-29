@@ -1,0 +1,3 @@
+C:/Users/Youssef/CLionProjects/Assingment4/cmake-build-debug/CMakeFiles/Assingment4.dir
+C:/Users/Youssef/CLionProjects/Assingment4/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Youssef/CLionProjects/Assingment4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
