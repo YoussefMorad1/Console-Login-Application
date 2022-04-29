@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "F:/FCAI/prog1/Console-Login-Application/cmake-build-debug",
-		"source" : "F:/FCAI/prog1/Console-Login-Application"
+		"build" : "C:/Users/Youssef/Documents/GitHub/Console-Login-Application/cmake-build-debug",
+		"source" : "C:/Users/Youssef/Documents/GitHub/Console-Login-Application"
 	},
 	"version" : 
 	{

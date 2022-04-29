@@ -6,28 +6,23 @@
 #include <conio.h>
 using namespace std;
 
-
+struct user_profile
+{
+    string ID, name, email, phone_number, password;
+};
 
 bool check_system_load();
 
 string take_hidden_input();
-void dont_close();
-
-struct user_profile
-{
-    string ID, name, email, phone_number, password;
-//    user_profile(string&  id, string& name_, string& mail, string& number, string& pass)
-//        : ID{id}, name{name_}, email{mail}, phone_number{number}, password{pass}
-//    {
-//    }
-};
-
-
-void add_profile_to_file(const user_profile& target_profile);
+void dont_close(); // temp function will be deleted
+void add_profile_to_file(const user_profile& target_profile); // just to test, not my part of project, will be deleted
 
 
 map <string, user_profile> profile_map;
 void load_profiles_to_map();
+
+void welcomeScreen();
+string take_menu_choice();
 
 string login();
     string take_login_ID();
@@ -49,13 +44,39 @@ const string fPasswords_name = "passwords.txt";
 
 int main()
 {
-    fProfiles.open(fProfiles_name);
-    char c; string s;
-    while(c = fProfiles.get()){
-        s += c;
+    if(!check_system_load()){
+        return 0;
     }
-    cout << s;
-    dont_close();
+
+    load_profiles_to_map();
+
+    while(true) {
+        welcomeScreen();
+
+        string choice = take_menu_choice();
+
+        if(choice == "1"){
+            ;
+        }
+        else if(choice == "2"){
+
+            if(login() == "0"){
+                continue;
+            }
+
+        }
+        else if(choice == "3"){
+
+            if(change_pass() == "0"){
+                continue;
+            }
+
+        }
+        else if(choice == "4"){
+            break;
+        }
+    }
+
 }
 
 bool check_system_load(){
@@ -74,6 +95,37 @@ bool check_system_load(){
         fPasswords.close();
         return true;
     }
+}
+
+void welcomeScreen(){
+    cout << "Welcome User!\n\n" << setw(40) << setfill('=') << "\n";
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "1. Register"
+        << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "2. Login"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "3. Change Password"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "4. Exit"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(40) << setfill('=') << "\n" << "\n";
+}
+
+string take_menu_choice(){
+    string option;
+    cout << ">>";
+    cin >> option;
+
+    while(option != "1" && option != "2" && option != "3" && option != "4"){
+        cout << "Invalid Input.. Please choose a number from the Menu\n>>";
+        cin >> option;
+    }
+
+    return option;
 }
 
 string take_hidden_input(){
@@ -176,7 +228,6 @@ string take_login_ID(){
 
 }
 
-
 string take_login_pass(const string& current_user_name){
 
     string in_pass;
@@ -210,7 +261,6 @@ string take_login_pass(const string& current_user_name){
     else
         return "0";
 }
-
 
 string login(){
 
