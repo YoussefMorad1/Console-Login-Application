@@ -1,0 +1,327 @@
+#include <iostream>
+#include <regex>
+#include <iomanip>
+#include <fstream>
+#include <cstring>
+#include <iterator>
+#include <algorithm>
+#include <stdlib.h>
+
+using namespace std;
+void welcomeScreen();
+string take_menu_choice();
+void personalInfo();
+bool check(string name,string pattern);
+void readEmail();
+void allEmail();
+void readUsername();
+void allUsername();
+void readMob();
+void allMob();
+void writeAll(string type);
+bool check_space(string name);
+string uname,mob,email;
+fstream file;
+int main(){
+    while(true) {
+        welcomeScreen();
+        string choice = take_menu_choice();
+
+        if(choice == "1"){
+            personalInfo();
+        }
+
+
+        break;}
+
+};
+
+
+bool check(string name,string pattern){
+    while (true){
+        cin>>name;
+        cin.ignore();
+        regex patterns(pattern);
+        if(regex_match(name,patterns)){
+            cout<<endl;
+            return true;
+        }
+        else{
+            cout<<"Invalid....Try again"<<endl;
+            continue;
+        }
+
+    }
+}
+bool check_noCIN(string name,string checkPatt){
+    regex patternz(checkPatt);
+    if (regex_match(name,patternz)){
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+
+
+
+
+
+//make email used once
+
+void readEmail(){
+
+    string fileMails;
+
+
+    //read file
+    file.open("C:\\Users\\USER\\Downloads\\LoginappSystem.txt");
+
+    while (file.good()) {
+        file >> fileMails;
+
+        //if email been registered before
+        regex similar (fileMails);
+        if(regex_match(email,similar)){
+            cout<<"This email already has an accout.."<<endl;
+            file.close();
+            allEmail();
+
+
+
+        }
+        else{
+
+            continue;
+
+        }
+    }
+
+    file.close();
+
+
+}
+void writeAll(string type){
+    file.open("C:\\Users\\USER\\Downloads\\LoginappSystem.txt",ios::out|ios::app);
+    file<<type<<'\n';
+    file.close();
+}
+
+bool check_space(string name){
+    for(int i=0;i<name.length();i++){
+        if (name[i]!=32){
+            return true;
+        }
+
+    }
+}
+
+
+
+
+void allEmail(){
+    cout<<"Please enter your email"<<endl;
+    while(true) {
+        getline(cin, email);
+        if (check_noCIN(email,"(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+") && check_space(email)) {
+            readEmail();
+            break;
+        }
+
+        else {
+            cout << "Please enter a valid email..Try again" << endl;
+            continue;
+        }
+
+    }
+}
+
+//-----------------------------------------------------------
+//make username used once
+void readUsername(){
+
+        string fileMails;
+
+
+        //read file
+        file.open("C:\\Users\\USER\\Downloads\\LoginappSystem.txt");
+
+        while (file.good()) {
+            file >> fileMails;
+
+            //if username has been used before
+            regex similar (fileMails);
+            if(regex_match(uname,similar)){
+                cout<<"This username is already used before.."<<endl;
+                file.close();
+                allUsername();
+
+
+
+            }
+            else{
+
+                continue;
+
+            }
+        }
+
+        file.close();
+
+
+    }
+
+void allUsername(){
+    cout<<"Please enter a Username"<<endl;
+    while(true) {
+        getline(cin, uname);
+        if (check_noCIN(uname,"[A-Za-z0-9_.]+") && check_space(uname)) {
+            readUsername();
+            break;
+        }
+
+        else {
+            cout << "Please enter a valid Username..Try again" << endl;
+            continue;
+        }
+
+    }
+}
+//---------------------------------------------------------------------------------------------------------
+//make mobile number used once
+void readMob(){
+    string fileMails;
+
+
+    //read file
+    file.open("C:\\Users\\USER\\Downloads\\LoginappSystem.txt");
+
+    while (file.good()) {
+        file >> fileMails;
+
+        //if mobile number has been used before
+        regex similar (fileMails);
+        if(regex_match(mob,similar)){
+            cout<<"This Mobile number is already used before.."<<endl;
+            file.close();
+            allMob();
+
+
+
+        }
+        else{
+
+            continue;
+
+        }
+    }
+
+    file.close();
+
+
+}
+
+
+void allMob(){
+    cout<<"Please enter your Mobile number "<<endl;
+    while(true) {
+        getline(cin, mob);
+        if (check_noCIN(mob,"01(0|1|2|5)[0-9]{8}") && check_space(mob)) {
+            readMob();
+            break;
+        }
+
+        else {
+            cout << "Please enter a valid Mobile number..Try again" << endl;
+            continue;
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------
+
+//Pesonal information function
+void personalInfo() {
+    string fname, pass, lname;
+
+    cout << "Please enter the following:\nFirst Name-->";
+    check(fname, "[a-zA-z-]+");
+
+    cout << "Last Name-->";
+    check(lname, "[a-zA-z-]+");
+
+    //username
+    allUsername();
+    cout<<"\nUsername Accepted\n"<<endl;
+    writeAll(uname);
+
+
+    cout << "Enter a password:\n";
+    cin >> pass;
+    cin.ignore();
+    cout << endl;
+
+    //email
+    allEmail();
+    cout<<"\nEmail Accepted\n"<<endl;
+    writeAll(email);
+
+
+    //mobile number
+    allMob();
+    cout<<"\nMobile Number Accepted\n"<<endl;
+    writeAll(mob+'\n');
+
+
+    cout<<"Personal information has been filled successfully"<<endl;
+}
+
+
+
+
+
+void welcomeScreen(){
+    cout << "Welcome User!\n\n" << setw(40) << setfill('=') << "\n";
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "1. Register"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "2. Login"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "3. Change Password"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(10) << setfill(' ') << left << "||" << setw(20) << setfill(' ') << "4. Exit"
+         << setw(10) << setfill(' ') << right << "||\n" ;
+
+    cout << setw(40) << setfill('=') << "\n" << "\n";
+}
+
+string take_menu_choice(){
+    string option;
+    cout << ">>";
+    cin >> option;
+    cin.ignore();
+    while(option != "1" && option != "2" && option != "3" && option != "4"){
+        cout << "Invalid Input.. Please choose a number from the Menu\n>>";
+        cin >> option;
+        cin.ignore();
+    }
+
+    return option;
+}
