@@ -3,4 +3,4 @@ project(Assingment4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Assingment4 main.cpp)
+add_executable(Assingment4 main.cpp header.h LibraryFile.cpp)

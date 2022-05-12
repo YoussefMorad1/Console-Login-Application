@@ -54,8 +54,14 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Assingment4" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Assingment4" TARGET_NAME="Assingment4" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Assingment4" RUN_TARGET_NAME="Assingment4">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -77,7 +83,7 @@
       <workItem from="1652046144782" duration="640000" />
       <workItem from="1652124313031" duration="2628000" />
       <workItem from="1652194061976" duration="28000" />
-      <workItem from="1652375620244" duration="4653000" />
+      <workItem from="1652375620244" duration="9490000" />
     </task>
     <servers />
   </component>
