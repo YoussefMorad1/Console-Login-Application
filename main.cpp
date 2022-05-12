@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <map>
+#include <regex>
 #include <set>
 #include <conio.h>
 using namespace std;
@@ -14,9 +15,6 @@ struct user_profile
 bool check_system_load();
 
 string take_hidden_input();
-void dont_close(); // temp function will be deleted
-void add_profile_to_file(const user_profile& target_profile); // just to test, not my part of project, will be deleted
-
 
 map <string, user_profile> profile_map;
 void load_profiles_to_map();
@@ -37,6 +35,27 @@ string change_pass();
     void add_pass_to_fProfiles(const string& curr_user, const string& new_pass);
 
 
+void personalInfo();
+
+    string check(string name,string pattern);
+    bool check_space(string name);
+
+    void allUsername();
+        void readUsername();
+
+    void show_pass_req();
+    string pass_match();
+        string take_strong_pass();
+
+    void allEmail();
+        void readEmail();
+
+    void allMob();
+        void readMob();
+
+    void writeAll(string type, string file_name);
+    string uname, mob, email;
+
 fstream fProfiles;
 fstream fPasswords;
 const string fProfiles_name = "profiles.txt";
@@ -56,7 +75,7 @@ int main()
         string choice = take_menu_choice();
 
         if(choice == "1"){
-            ;
+            personalInfo();
         }
         else if(choice == "2"){
 
@@ -137,7 +156,7 @@ string take_hidden_input(){
             cout << '*';
             pass += p;
         }
-        else if(p == '\b'){
+        else if(p == '\b' && !pass.empty()){
             cout << "\b \b";
             pass.pop_back();
         }
@@ -486,6 +505,277 @@ string change_pass(){
     cout << "Your Password was updated successfully!\n";
     return "1";
 
+}
+
+//___________________________________
+
+string check(string name,string pattern) {
+    while (true) {
+        cin.clear();
+        cin.sync();
+        getline(cin, name);
+        regex patterns(pattern);
+        if(regex_match(name,patterns)){
+            cout<<endl;
+            break;
+        }
+        else{
+            cout<<"Invalid....Try again"<<endl;
+            continue;
+        }
+
+    }
+    return name;
+}
+
+bool check_noCIN(string name,string checkPatt) {
+    regex patternz(checkPatt);
+    if (regex_match(name,patternz)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+//make email used once
+void readEmail() {
+    string fileMails;
+
+    //read file
+    fProfiles.open("profiles.txt");
+
+    while (fProfiles.good()) {
+        fProfiles >> fileMails;
+
+        //if email been registered before
+        regex similar (fileMails);
+        if(regex_match(email,similar)) {
+            cout<<"This email already has an accout.."<<endl;
+            fProfiles.close();
+            allEmail();
+        }
+        else {
+            continue;
+        }
+    }
+    fProfiles.close();
+}
+
+void writeAll(string type, string file_name) {
+    fProfiles.open(file_name,ios::out|ios::app);
+    fProfiles<<type<<'\n';
+    fProfiles.close();
+}
+
+bool check_space(string name) {
+    for(int i=0;i<name.length();i++) {
+        if (name[i]!=32) {
+            return true;
+        }
+    }
+}
+
+void allEmail() {
+    cout<<"Please enter your email"<<endl;
+    while(true) {
+        getline(cin, email);
+        if (check_noCIN(email,"(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+") && check_space(email)) {
+            readEmail();
+            break;
+        }
+        else {
+            cout << "Please enter a valid email..Try again" << endl;
+            continue;
+        }
+    }
+}
+
+//-----------------------------------------------------------
+//make username used once
+void readUsername() {
+    string fileMails;
+
+    //read file
+    fProfiles.open("profiles.txt");
+
+    while (fProfiles.good()) {
+        fProfiles >> fileMails;
+
+        //if username has been used before
+        regex similar (fileMails);
+        if(regex_match(uname,similar)){
+            cout<<"This username is already used before.."<<endl;
+            fProfiles.close();
+            allUsername();
+        }
+        else {
+            continue;
+        }
+    }
+    fProfiles.close();
+}
+
+void allUsername() {
+    cout<<"Please enter a Username"<<endl;
+    while(true) {
+        getline(cin, uname);
+        if (check_noCIN(uname,"[A-Za-z0-9_.]+") && check_space(uname)) {
+            readUsername();
+            break;
+        }
+        else {
+            cout << "Please enter a valid Username..Try again" << endl;
+            continue;
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------------------------------
+//make mobile number used once
+void readMob() {
+    string fileMails;
+
+    //read file
+    fProfiles.open("profiles.txt");
+
+    while (fProfiles.good()) {
+        fProfiles >> fileMails;
+
+        //if mobile number has been used before
+        regex similar (fileMails);
+        if(regex_match(mob,similar)){
+            cout<<"This Mobile number is already used before.."<<endl;
+            fProfiles.close();
+            allMob();
+        }
+        else {
+            continue;
+        }
+    }
+    fProfiles.close();
+}
+
+void allMob() {
+    cout<<"Please enter your Mobile number "<<endl;
+    while(true) {
+        getline(cin, mob);
+        if (check_noCIN(mob,"01(0|1|2|5)[0-9]{8}") && check_space(mob)) {
+            readMob();
+            break;
+        }
+        else {
+            cout << "Please enter a valid Mobile number..Try again" << endl;
+            continue;
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------------
+//Pesonal information function
+void personalInfo() {
+    string fname, pass, lname;
+
+    cout << "Please enter the following:\nFirst Name-->";
+    fname = check(fname, "[a-zA-z-]+");
+
+    cout << "Last Name-->";
+    lname = check(lname, "[a-zA-z- ]+");
+
+    //username
+    allUsername();
+    cout<<"\nUsername Accepted\n"<<endl;
+
+    // password
+    show_pass_req();
+    pass = pass_match();
+    cout << endl;
+
+    //email
+    allEmail();
+    cout<<"\nEmail Accepted\n"<<endl;
+
+    //mobile number
+    allMob();
+    cout<<"\nMobile Number Accepted\n"<<endl;
+
+    // write all info to Profile_file
+    writeAll('\n'+uname, fProfiles_name);
+    writeAll(fname+' '+lname, fProfiles_name);
+    writeAll(email, fProfiles_name);
+    writeAll(mob, fProfiles_name);
+    writeAll(pass, fProfiles_name);
+
+    writeAll('\n'+uname, fPasswords_name);
+    writeAll(pass, fPasswords_name);
+
+
+    cout<<"Personal information has been filled successfully"<<endl;
+}
+
+
+void show_pass_req() {
+    cout << "Strong password requirements:\n";
+    cout << "1. At least 12 characters.\n";
+    cout << "2. A mixture of both uppercase and lowercase letters.\n";
+    cout << "3. A mixture of letters and numbers.\n";
+    cout << "4. At least one special character (!, @, ?, ..)\n";
+}
+
+
+string take_strong_pass() {
+    string pass;
+    bool upper = false;
+    bool lower = false;
+    bool number = false;
+    bool special = false;
+    bool strong = false;
+
+    regex upper_exp{"[A-Z]+"};
+    regex lower_exp{"[a-z]+"};
+    regex number_exp{"[0-9]+"};
+    regex special_exp{"[$&+,:;=?@#|'<>.^*()%!-]+"};
+
+    while (!strong) {
+        cout << "Enter a password: ";
+        pass = take_hidden_input();
+
+        if (pass.length() < 12) {
+            cout << "Invalid Password. Please Try Again.\n";
+        }
+        else {
+            upper = regex_search(pass, upper_exp);
+            lower = regex_search(pass, lower_exp);
+            number = regex_search(pass, number_exp);
+            special = regex_search(pass, special_exp);
+
+            if (upper+lower+number+special < 4) {
+                cout << "Invalid Password. Please Try Again.\n";
+            }
+            else {
+                strong = true;
+            }
+        }
+    }
+    return pass;
+}
+
+string pass_match() {
+    string pass, pass2;
+    bool match = false;
+    while (!match) {
+        pass = take_strong_pass();
+        cout << "Enter password again to verify: ";
+        pass2 = take_hidden_input();
+        if (pass == pass2) {
+            cout << "Strong Password Saved.\n";
+            match = true;
+        }
+        else {
+            cout << "Passwords do not match. Please Try Again.\n";
+        }
+    }
+    return pass;
 }
 
 

@@ -35,6 +35,8 @@ int main() {
         welcomeScreen();
         string choice = take_menu_choice();
 
+
+
         if(choice == "1") { 
             personalInfo();
         }
