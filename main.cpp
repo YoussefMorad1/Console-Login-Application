@@ -359,8 +359,9 @@ string entering_last_pass(const string& current_pass){
 
 string entering_new_pass(){
 
+    show_pass_req();
     cout << setw(20) << setfill(' ') << "Now Enter your new Password: ";
-    string new_pass = take_hidden_input();
+    string new_pass = take_strong_pass();
 
     while (pass_set.find(new_pass) != pass_set.end() or new_pass == "0") {
         if(new_pass == "0"){
@@ -501,6 +502,8 @@ string change_pass(){
 
     add_pass_to_fProfiles(target_user_id, new_pass);
 
+    profile_map[target_user_id].password = new_pass;
+
 
     cout << "Your Password was updated successfully!\n";
     return "1";
@@ -569,11 +572,12 @@ void writeAll(string type, string file_name) {
 }
 
 bool check_space(string name) {
-    for(int i=0;i<name.length();i++) {
-        if (name[i]!=32) {
-            return true;
+    for(int i = 0; i < name.length(); i++) {
+        if (name[i] == 32) {
+            return false;
         }
     }
+    return true;
 }
 
 void allEmail() {
