@@ -44,7 +44,7 @@ If either of them is registered, the system refuses them and ask user to enter n
 3. The user is given three trials in total, after them, a message is displayed that informs him that he is denied access to the system. Then he returns to the main menu.   
 
 ## Change Password
-15- If the user wants to change the password:
+If the user wants to change the password:
   * S/he should choose this option and then login.
   * Enter his old password.
   * Enter the newly desired password.
