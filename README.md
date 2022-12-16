@@ -56,5 +56,5 @@ If the user wants to change the password:
   
 ## Data Base of the System
 The system uses 2 txt files to save the information of the users
-* Profile.txt: it has -> The Username - Name -Eemail - Phone number - Encrypted Password of the user
+* Profile.txt: it has (The Username - Name -Eemail - Phone number - Encrypted Password) of the user
 * Passwords.txt: it has all previous passwords of a user (saved encrypted)
