@@ -53,3 +53,8 @@ If the user wants to change the password:
   * The newly selected password SHOULD NOT be any of his old passwords (this means
   that older passwords should be stored)
   * Then his profile is updated with the new password and it stored encrypted
+  
+## Data Base of the System
+The system uses 2 txt files to save the information of the users
+* Profile.txt: it has -> The Username - Name -Eemail - Phone number - Encrypted Password of the user
+* Passwords.txt: it has all previous passwords of a user (saved encrypted)
